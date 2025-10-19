@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5 pt-4">
+    <!-- Page Header -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-4 mb-3">BMW Shop</h1>
+            <p class="lead">Official BMW merchandise and accessories</p>
+        </div>
+    </div>
+
+    <!-- Search and Filter -->
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <form method="get" class="d-flex">
+                <input type="text" name="search" class="form-control me-2"
+                       placeholder="Search products..." value="{{ search_query }}">
+                <button type="submit" class="btn btn-bmw">Search</button>
+            </form>
+        </div>
+        <div class="col-md-4">
+            <select class="form-select" onchange="location = this.value;">
+                <option value="{% url 'product_list' %}">All Categories</option>
+                {% for key, value in categories.items %}
+                <option value="{% url 'product_list' %}?category={{ key }}"
+                        {% if selected_category == key %}selected{% endif %}>
+                    {{ value }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="row">
+        {% for product in products %}
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+            <div class="card card-bmw h-100">
+                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}"
+                     style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h6 class="card-title">{{ product.name }}</h6>
+                    <p class="card-text small">{{ product.description|truncatewords:15 }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="h6 mb-0 text-bmw-blue">${{ product.price }}</span>
+                        {% if product.stock > 0 %}
+                        <small class="text-success">In Stock</small>
+                        {% else %}
+                        <small class="text-danger">Out of Stock</small>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'product_detail' product.id %}" class="btn btn-outline-light btn-sm">
+                            View Details
+                        </a>
+                        {% if product.stock > 0 %}
+                        <a href="{% url 'add_to_cart' product.id %}" class="btn btn-bmw btn-sm">
+                            <i class="fas fa-cart-plus me-1"></i>Add to Cart
+                        </a>
+                        {% else %}
+                        <button class="btn btn-secondary btn-sm" disabled>Out of Stock</button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center">
+            <h3>No products found</h3>
+            <p>Try adjusting your search or filter criteria.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

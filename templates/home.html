@@ -1,0 +1,1370 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    /* Hero Section Styles - Enhanced */
+    .hero-section {
+        height: 100vh;
+        background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)),
+                    url('{% static "images/bmw-hero-main.jpg" %}') center/cover;
+        display: flex;
+        align-items: center;
+        position: relative;
+        margin-top: -80px;
+        padding-top: 80px;
+        overflow: hidden;
+    }
+
+    .hero-content {
+        text-align: left;
+        max-width: 600px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero-title {
+        font-size: 4rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        background: linear-gradient(45deg, #fff, #00a8ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        line-height: 1.1;
+    }
+
+    .hero-subtitle {
+        font-size: 1.4rem;
+        margin-bottom: 2rem;
+        color: #ffffff;
+        font-weight: 300;
+        line-height: 1.6;
+    }
+
+    .hero-badge {
+        background: linear-gradient(45deg, var(--bmw-blue), var(--bmw-m-blue));
+        color: white;
+        padding: 8px 20px;
+        border-radius: 25px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        display: inline-block;
+        margin-bottom: 20px;
+    }
+
+    /* Section Styles - Enhanced */
+    .section-title {
+        font-size: 2.8rem;
+        font-weight: 700;
+        margin-bottom: 3rem;
+        text-align: center;
+        color: #ffffff;
+        position: relative;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .section-title:after {
+        content: '';
+        position: absolute;
+        bottom: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, var(--bmw-blue), var(--bmw-m-blue));
+        border-radius: 2px;
+    }
+
+    .section-subtitle {
+        font-size: 1.2rem;
+        text-align: center;
+        color: var(--bmw-silver);
+        margin-bottom: 4rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.6;
+    }
+
+    /* Model Showcase - Enhanced */
+    .model-showcase {
+        padding: 120px 0;
+        background: linear-gradient(135deg, var(--bmw-black) 0%, #0a0a0a 100%);
+        position: relative;
+    }
+
+    .model-showcase::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--bmw-blue), transparent);
+    }
+
+    .model-card {
+        background: linear-gradient(145deg, var(--bmw-dark-gray), var(--bmw-gray));
+        border-radius: 15px;
+        overflow: hidden;
+        transition: all 0.4s ease;
+        border: 1px solid var(--bmw-light-gray);
+        position: relative;
+    }
+
+    .model-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--bmw-blue), var(--bmw-m-blue));
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+    }
+
+    .model-card:hover::before {
+        transform: scaleX(1);
+    }
+
+    .model-card:hover {
+        transform: translateY(-15px) scale(1.02);
+        border-color: var(--bmw-blue);
+        box-shadow: 0 25px 50px rgba(0, 168, 255, 0.3);
+    }
+
+    .model-image {
+        height: 280px;
+        object-fit: cover;
+        width: 100%;
+        transition: transform 0.4s ease;
+    }
+
+    .model-card:hover .model-image {
+        transform: scale(1.05);
+    }
+
+    .model-badge {
+        background: var(--bmw-blue);
+        color: white;
+        padding: 6px 18px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    /* Electric Section - Enhanced */
+    .electric-section {
+        background: linear-gradient(135deg, var(--bmw-black) 0%, #001a33 100%);
+        padding: 120px 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .electric-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('{% static "images/electric-pattern.png" %}') center/cover;
+        opacity: 0.05;
+    }
+
+    .electric-glow {
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, var(--bmw-neon-blue) 0%, transparent 70%);
+        opacity: 0.1;
+        border-radius: 50%;
+        top: 50%;
+        right: -100px;
+        transform: translateY(-50%);
+    }
+
+    /* M Series Section - Enhanced */
+    .m-series-section {
+        background: linear-gradient(135deg, #1a0000 0%, var(--bmw-black) 50%);
+        padding: 120px 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .m-series-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('{% static "images/m-pattern.png" %}') center/cover;
+        opacity: 0.05;
+    }
+
+    .m-badge {
+        background: linear-gradient(45deg, var(--bmw-red), #ff4444);
+        color: white;
+        padding: 10px 25px;
+        border-radius: 25px;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        display: inline-block;
+        margin-bottom: 20px;
+        letter-spacing: 1px;
+    }
+
+    /* Image Gallery Section */
+    .gallery-section {
+        padding: 100px 0;
+        background: var(--bmw-dark-gray);
+    }
+
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        margin-top: 50px;
+    }
+
+    .gallery-item {
+        position: relative;
+        border-radius: 15px;
+        overflow: hidden;
+        height: 300px;
+        cursor: pointer;
+        transition: all 0.4s ease;
+    }
+
+    .gallery-item:hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+
+    .gallery-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+    }
+
+    .gallery-item:hover .gallery-image {
+        transform: scale(1.1);
+    }
+
+    .gallery-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(transparent, rgba(0,0,0,0.8));
+        padding: 30px 20px 20px;
+        color: white;
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+    }
+
+    .gallery-item:hover .gallery-overlay {
+        transform: translateY(0);
+    }
+
+    /* Technology Highlights Section */
+    .tech-section {
+        padding: 100px 0;
+        background: linear-gradient(135deg, var(--bmw-black) 0%, #0d0d0d 100%);
+    }
+
+    .tech-tabs {
+        background: var(--bmw-dark-gray);
+        border-radius: 15px;
+        padding: 40px;
+        border: 1px solid var(--bmw-gray);
+    }
+
+    .tech-tab-nav {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 40px;
+        flex-wrap: wrap;
+    }
+
+    .tech-tab-btn {
+        background: var(--bmw-gray);
+        border: none;
+        color: var(--bmw-silver);
+        padding: 15px 25px;
+        border-radius: 10px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .tech-tab-btn.active {
+        background: var(--bmw-blue);
+        color: white;
+    }
+
+    .tech-tab-content {
+        display: none;
+    }
+
+    .tech-tab-content.active {
+        display: block;
+        animation: fadeIn 0.5s ease;
+    }
+
+    /* BMW Financial Services Section */
+    .financial-section {
+        padding: 100px 0;
+        background: linear-gradient(135deg, #001f3f 0%, var(--bmw-black) 100%);
+    }
+
+    .financial-card {
+        background: var(--bmw-dark-gray);
+        border-radius: 15px;
+        padding: 40px;
+        text-align: center;
+        border: 1px solid var(--bmw-gray);
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+
+    .financial-card:hover {
+        border-color: var(--bmw-blue);
+        transform: translateY(-10px);
+    }
+
+    .financial-icon {
+        font-size: 3rem;
+        color: var(--bmw-blue);
+        margin-bottom: 20px;
+    }
+
+    /* BMW Lifestyle Section */
+    .lifestyle-section {
+        padding: 100px 0;
+        background: var(--bmw-black);
+    }
+
+    .lifestyle-product {
+        background: var(--bmw-dark-gray);
+        border-radius: 15px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        border: 1px solid var(--bmw-gray);
+    }
+
+    .lifestyle-product:hover {
+        transform: translateY(-10px);
+        border-color: var(--bmw-blue);
+    }
+
+    .lifestyle-image {
+        height: 250px;
+        object-fit: cover;
+        width: 100%;
+    }
+
+    /* Innovation Section - Enhanced */
+    .innovation-section {
+        background: linear-gradient(135deg, var(--bmw-dark-gray) 0%, #2d2d2d 100%);
+        padding: 120px 0;
+        position: relative;
+    }
+
+    .feature-card {
+        text-align: center;
+        padding: 50px 30px;
+        background: linear-gradient(145deg, var(--bmw-gray), var(--bmw-dark-gray));
+        border-radius: 15px;
+        transition: all 0.4s ease;
+        border: 1px solid transparent;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .feature-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--bmw-blue), var(--bmw-m-blue));
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover::before {
+        transform: scaleX(1);
+    }
+
+    .feature-card:hover {
+        border-color: var(--bmw-blue);
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+
+    .feature-icon {
+        font-size: 3.5rem;
+        color: var(--bmw-blue);
+        margin-bottom: 25px;
+        transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover .feature-icon {
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    /* News Section - Enhanced */
+    .news-section {
+        padding: 120px 0;
+        background: linear-gradient(135deg, var(--bmw-black) 0%, #1a1a1a 100%);
+    }
+
+    .news-card {
+        background: linear-gradient(145deg, var(--bmw-dark-gray), var(--bmw-gray));
+        border-radius: 15px;
+        overflow: hidden;
+        transition: all 0.4s ease;
+        border: 1px solid var(--bmw-gray);
+    }
+
+    .news-card:hover {
+        transform: translateY(-10px);
+        border-color: var(--bmw-blue);
+        box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+    }
+
+    .news-image {
+        height: 220px;
+        object-fit: cover;
+        width: 100%;
+        transition: transform 0.4s ease;
+    }
+
+    .news-card:hover .news-image {
+        transform: scale(1.1);
+    }
+
+    .news-badge {
+        background: var(--bmw-blue);
+        color: white;
+        padding: 5px 15px;
+        border-radius: 15px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    /* CTA Section - Enhanced */
+    .cta-section {
+        background: linear-gradient(135deg, var(--bmw-blue) 0%, var(--bmw-m-blue) 100%);
+        padding: 100px 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .cta-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('{% static "images/pattern.png" %}') center/cover;
+        opacity: 0.1;
+    }
+
+    .cta-title {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        color: white;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    .cta-subtitle {
+        font-size: 1.3rem;
+        color: rgba(255,255,255,0.9);
+        margin-bottom: 3rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Stats Counter */
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 700;
+        background: linear-gradient(45deg, var(--bmw-blue), var(--bmw-m-blue));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        display: block;
+    }
+
+    .stat-label {
+        color: var(--bmw-silver);
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.8rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+        }
+
+        .cta-title {
+            font-size: 2.2rem;
+        }
+
+        .gallery-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .tech-tab-nav {
+            justify-content: center;
+        }
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    .animate-fade-in {
+        animation: fadeInUp 0.8s ease-out;
+    }
+
+    /* Floating Elements */
+    .floating-element {
+        animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0%, 100% {
+            transform: translateY(0px);
+        }
+        50% {
+            transform: translateY(-20px);
+        }
+    }
+</style>
+
+<!-- Main Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="hero-content animate-fade-in">
+            <span class="hero-badge">New Model Available</span>
+            <h1 class="hero-title">THE NEW BMW 7 SERIES</h1>
+            <p class="hero-subtitle">Redefining luxury and innovation with groundbreaking design, cutting-edge technology, and unparalleled driving experience.</p>
+            <div class="hero-buttons">
+                <a href="{% url 'car_list' %}" class="btn btn-bmw btn-lg me-3">Explore Models</a>
+                <a href="#" class="btn btn-outline-light btn-lg">Build Your Own</a>
+            </div>
+            <div class="row mt-5 pt-4">
+                <div class="col-3">
+                    <span class="stat-number" data-target="120">0</span>
+                    <span class="stat-label">Years of Innovation</span>
+                </div>
+                <div class="col-3">
+                    <span class="stat-number" data-target="15">0</span>
+                    <span class="stat-label">Million+ Cars</span>
+                </div>
+                <div class="col-3">
+                    <span class="stat-number" data-target="140">0</span>
+                    <span class="stat-label">Countries</span>
+                </div>
+                <div class="col-3">
+                    <span class="stat-number" data-target="95">0</span>
+                    <span class="stat-label">Awards 2023</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="electric-glow"></div>
+</section>
+
+<!-- Featured Models Section -->
+<section class="model-showcase">
+    <div class="container">
+        <h2 class="section-title">BMW Model Range</h2>
+        <p class="section-subtitle">Discover the perfect BMW that matches your lifestyle and driving preferences</p>
+
+        <div class="row g-4">
+            {% for car in featured_cars %}
+            <div class="col-lg-4 col-md-6">
+                <div class="model-card h-100">
+                    <img src="{{ car.image.url }}" class="model-image" alt="{{ car.name }}">
+                    <div class="p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h4 class="text-white">{{ car.name }}</h4>
+                            <span class="model-badge">{{ car.get_category_display }}</span>
+                        </div>
+                        <p class="text-light mb-4">{{ car.description|truncatewords:20 }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="h5 text-bmw-blue mb-0">From ${{ car.price }}</span>
+                            <div>
+                                <a href="{% url 'car_detail' car.id %}" class="btn btn-bmw btn-sm me-2">Discover</a>
+                                <a href="{% url 'configurator' car.id %}" class="btn btn-outline-light btn-sm">Configure</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="text-center mt-5">
+            <a href="{% url 'car_list' %}" class="btn btn-bmw btn-lg">View All Models</a>
+        </div>
+    </div>
+</section>
+
+<!-- Electric Vehicles Section -->
+<section class="electric-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <span class="model-badge">Fully Electric</span>
+                <h2 class="text-white mb-4">THE FUTURE IS ELECTRIC</h2>
+                <p class="text-light lead mb-4">
+                    Experience the next generation of mobility with BMW i Series.
+                    Zero emissions, maximum performance, and sustainable luxury that doesn't compromise on driving pleasure.
+                </p>
+                <div class="row mb-4">
+                    <div class="col-4">
+                        <div class="text-center">
+                            <h3 class="text-bmw-blue"><span data-target="300">0</span>+</h3>
+                            <small class="text-light">Miles Range</small>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="text-center">
+                            <h3 class="text-bmw-blue"><span data-target="3.5">0</span>s</h3>
+                            <small class="text-light">0-60 mph</small>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="text-center">
+                            <h3 class="text-bmw-blue"><span data-target="30">0</span>min</h3>
+                            <small class="text-light">Fast Charge</small>
+                        </div>
+                    </div>
+                </div>
+                <a href="{% url 'car_list' %}?category=I" class="btn btn-bmw btn-lg me-3">Explore BMW i</a>
+                <a href="#" class="btn btn-outline-light btn-lg">Charging Solutions</a>
+            </div>
+            <div class="col-lg-6 text-center">
+                <img src="{% static 'images/bmw-i7.png' %}" alt="BMW i7" class="img-fluid floating-element" style="max-height: 500px;">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Image Gallery Section -->
+<section class="gallery-section">
+    <div class="container">
+        <h2 class="section-title">BMW Gallery</h2>
+        <p class="section-subtitle">Explore the beauty and craftsmanship of BMW through our exclusive gallery</p>
+
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="{% static 'images/gallery-1.jpg' %}" class="gallery-image" alt="BMW Design">
+                <div class="gallery-overlay">
+                    <h5 class="text-white">Design Excellence</h5>
+                    <p class="text-light mb-0">Iconic BMW design language</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="{% static 'images/gallery-2.jpg' %}" class="gallery-image" alt="BMW Interior">
+                <div class="gallery-overlay">
+                    <h5 class="text-white">Luxury Interior</h5>
+                    <p class="text-light mb-0">Premium materials and craftsmanship</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="{% static 'images/gallery-3.jpg' %}" class="gallery-image" alt="BMW Technology">
+                <div class="gallery-overlay">
+                    <h5 class="text-white">Innovative Technology</h5>
+                    <p class="text-light mb-0">Cutting-edge digital experience</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- M Series Section -->
+<section class="m-series-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 text-center">
+                <img src="{% static 'images/bmw-m8.png' %}" alt="BMW M8" class="img-fluid floating-element" style="max-height: 500px;">
+            </div>
+            <div class="col-lg-6">
+                <span class="m-badge">M Power</span>
+                <h2 class="text-white mb-4">BORN TO PERFORM</h2>
+                <p class="text-light lead mb-4">
+                    Unleash the power of BMW M. Engineered for the track, designed for the road.
+                    Experience uncompromised performance, precision handling, and adrenaline-pumping acceleration.
+                </p>
+                <div class="row mb-4">
+                    <div class="col-4">
+                        <div class="text-center">
+                            <h3 class="text-bmw-red"><span data-target="617">0</span> HP</h3>
+                            <small class="text-light">Power</small>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="text-center">
+                            <h3 class="text-bmw-red"><span data-target="2.9">0</span>s</h3>
+                            <small class="text-light">0-60 mph</small>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="text-center">
+                            <h3 class="text-bmw-red"><span data-target="190">0</span>mph</h3>
+                            <small class="text-light">Top Speed</small>
+                        </div>
+                    </div>
+                </div>
+                <a href="{% url 'car_list' %}?category=M" class="btn btn-bmw btn-bmw-m btn-lg me-3">Explore M Series</a>
+                <a href="#" class="btn btn-outline-light btn-lg">M Track Days</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Technology Highlights Section -->
+<section class="tech-section">
+    <div class="container">
+        <h2 class="section-title">Innovative Technology</h2>
+        <p class="section-subtitle">Discover the advanced technologies that make every BMW a masterpiece of innovation</p>
+
+        <div class="tech-tabs">
+            <div class="tech-tab-nav">
+                <button class="tech-tab-btn active" data-tab="driving">Driving Assistant</button>
+                <button class="tech-tab-btn" data-tab="display">Curved Display</button>
+                <button class="tech-tab-btn" data-tab="assistant">Personal Assistant</button>
+                <button class="tech-tab-btn" data-tab="connect">ConnectedDrive</button>
+            </div>
+
+            <!-- Driving Assistant Tab -->
+            <div class="tech-tab-content active" id="driving-tab">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <h3 class="text-white mb-4">Driving Assistant Professional</h3>
+                        <p class="text-light mb-4">
+                            Experience a new level of driving comfort with our advanced driver assistance systems.
+                            From highway driving to parking maneuvers, BMW's intelligent technology supports you in every situation.
+                        </p>
+                        <ul class="text-light list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check text-bmw-blue me-2"></i>Active Cruise Control with Stop&Go</li>
+                            <li class="mb-2"><i class="fas fa-check text-bmw-blue me-2"></i>Steering and Lane Control Assistant</li>
+                            <li class="mb-2"><i class="fas fa-check text-bmw-blue me-2"></i>Emergency Stop Assistant</li>
+                            <li class="mb-2"><i class="fas fa-check text-bmw-blue me-2"></i>Parking Assistant Plus</li>
+                            <li class="mb-2"><i class="fas fa-check text-bmw-blue me-2"></i>Cross-traffic warning and intervention</li>
+                            <li class="mb-2"><i class="fas fa-check text-bmw-blue me-2"></i>Lane change assistant with active side protection</li>
+                        </ul>
+
+                    </div>
+                    <div class="col-lg-6 text-center">
+                        <img src="{% static 'images/tech-driving.jpg' %}" alt="Driving Assistant" class="img-fluid rounded" style="max-height: 400px;">
+                        <div class="row mt-4 text-center">
+                            <div class="col-4">
+                                <div class="tech-stat">
+                                    <h4 class="text-bmw-blue mb-1">360°</h4>
+                                    <small class="text-light">Surround View</small>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="tech-stat">
+                                    <h4 class="text-bmw-blue mb-1">12</h4>
+                                    <small class="text-light">Ultrasonic Sensors</small>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="tech-stat">
+                                    <h4 class="text-bmw-blue mb-1">8</h4>
+                                    <small class="text-light">Cameras</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Curved Display Tab -->
+            <div class="tech-tab-content" id="display-tab">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <h3 class="text-white mb-4">BMW Curved Display</h3>
+                        <p class="text-light mb-4">
+                            The BMW Curved Display seamlessly integrates a 12.3" information display and 14.9" control display
+                            into a single unit that appears to float in front of the driver, creating an immersive digital experience.
+                        </p>
+                        <ul class="text-light list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check text-bmw-blue me-2"></i>High-resolution graphics and touch operation</li>
+                            <li class="mb-2"><i class="fas fa-check text-bmw-blue me-2"></i>Augmented Video View for navigation</li>
+                            <li class="mb-2"><i class="fas fa-check text-bmw-blue me-2"></i>Voice control with natural language understanding</li>
+                            <li class="mb-2"><i class="fas fa-check text-bmw-blue me-2"></i>Gesture control for key functions</li>
+                            <li class="mb-2"><i class="fas fa-check text-bmw-blue me-2"></i>BMW Operating System 8.5 with quick select</li>
+                            <li class="mb-2"><i class="fas fa-check text-bmw-blue me-2"></i>Wireless Apple CarPlay & Android Auto</li>
+                        </ul>
+
+                    </div>
+                    <div class="col-lg-6 text-center">
+                        <img src="{% static 'images/tech-display.jpg' %}" alt="Curved Display" class="img-fluid rounded" style="max-height: 400px;">
+                        <div class="row mt-4 text-center">
+                            <div class="col-4">
+                                <div class="tech-stat">
+                                    <h4 class="text-bmw-blue mb-1">12.3"</h4>
+                                    <small class="text-light">Info Display</small>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="tech-stat">
+                                    <h4 class="text-bmw-blue mb-1">14.9"</h4>
+                                    <small class="text-light">Control Display</small>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="tech-stat">
+                                    <h4 class="text-bmw-blue mb-1">4K</h4>
+                                    <small class="text-light">Resolution</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Personal Assistant Tab -->
+            <div class="tech-tab-content" id="assistant-tab">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <h3 class="text-white mb-4">BMW Intelligent Personal Assistant</h3>
+                        <p class="text-light mb-4">
+                            Your digital companion that learns your preferences and helps you with natural voice commands.
+                            From adjusting climate control to finding parking spots, your BMW understands and assists.
+                        </p>
+                        <ul class="text-light list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check text-bmw-blue me-2"></i>Natural voice recognition with contextual understanding</li>
+                            <li class="mb-2"><i class="fas fa-check text-bmw-blue me-2"></i>"Hey BMW" wake word activation</li>
+                            <li class="mb-2"><i class="fas fa-check text-bmw-blue me-2"></i>Personalized suggestions based on driving habits</li>
+                            <li class="mb-2"><i class="fas fa-check text-bmw-blue me-2"></i>Remote control via BMW App</li>
+                            <li class="mb-2"><i class="fas fa-check text-bmw-blue me-2"></i>Smart home integration capabilities</li>
+                            <li class="mb-2"><i class="fas fa-check text-bmw-blue me-2"></i>Proactive maintenance alerts and service scheduling</li>
+                        </ul>
+                        <div class="feature-highlights mt-4">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <i class="fas fa-robot text-bmw-blue me-3 fs-4"></i>
+                                        <div>
+                                            <h6 class="text-white mb-0">AI-Powered</h6>
+                                            <small class="text-light">Machine Learning</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <i class="fas fa-cloud text-bmw-blue me-3 fs-4"></i>
+                                        <div>
+                                            <h6 class="text-white mb-0">Cloud Connected</h6>
+                                            <small class="text-light">Always Updated</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-6 text-center">
+                        <img src="{% static 'images/tech-assistant.jpg' %}" alt="Personal Assistant" class="img-fluid rounded" style="max-height: 400px;">
+                        <div class="voice-commands mt-4 p-3 rounded" style="background: var(--bmw-gray);">
+                            <h6 class="text-white mb-3">Try These Commands:</h6>
+                            <div class="command-examples">
+                                <span class="badge bg-bmw-blue me-2 mb-2">"Hey BMW, I'm cold"</span>
+                                <span class="badge bg-bmw-blue me-2 mb-2">"Find parking near me"</span>
+                                <span class="badge bg-bmw-blue me-2 mb-2">"Play my driving playlist"</span>
+                                <span class="badge bg-bmw-blue me-2 mb-2">"What's my fuel range?"</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ConnectedDrive Tab -->
+            <div class="tech-tab-content" id="connect-tab">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <h3 class="text-white mb-4">BMW ConnectedDrive</h3>
+                        <p class="text-light mb-4">
+                            Stay connected to your BMW and the world around you with our comprehensive digital services.
+                            Real-time traffic, remote services, and over-the-air updates keep your BMW at the cutting edge.
+                        </p>
+
+                        <div class="row mb-4">
+                            <div class="col-6">
+                                <div class="connected-feature mb-3">
+                                    <div class="d-flex align-items-start">
+                                        <i class="fas fa-satellite-dish text-bmw-blue me-3 mt-1"></i>
+                                        <div>
+                                            <h6 class="text-white mb-1">Real-Time Traffic</h6>
+                                            <small class="text-light">Live traffic information</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="connected-feature mb-3">
+                                    <div class="d-flex align-items-start">
+                                        <i class="fas fa-mobile-alt text-bmw-blue me-3 mt-1"></i>
+                                        <div>
+                                            <h6 class="text-white mb-1">Remote Services</h6>
+                                            <small class="text-light">Control from your phone</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="connected-feature mb-3">
+                                    <div class="d-flex align-items-start">
+                                        <i class="fas fa-wifi text-bmw-blue me-3 mt-1"></i>
+                                        <div>
+                                            <h6 class="text-white mb-1">Over-the-Air Updates</h6>
+                                            <small class="text-light">Always up to date</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="connected-feature mb-3">
+                                    <div class="d-flex align-items-start">
+                                        <i class="fas fa-map-marked-alt text-bmw-blue me-3 mt-1"></i>
+                                        <div>
+                                            <h6 class="text-white mb-1">Advanced Navigation</h6>
+                                            <small class="text-light">Predictive routing</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <ul class="text-light list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check text-bmw-blue me-2"></i>Real-time traffic information and intelligent routing</li>
+                            <li class="mb-2"><i class="fas fa-check text-bmw-blue me-2"></i>Remote lock/unlock and climate control</li>
+                            <li class="mb-2"><i class="fas fa-check text-bmw-blue me-2"></i>Over-the-air software updates</li>
+                            <li class="mb-2"><i class="fas fa-check text-bmw-blue me-2"></i>BMW Digital Key with smartphone integration</li>
+                            <li class="mb-2"><i class="fas fa-check text-bmw-blue me-2"></i>Concierge services and emergency call</li>
+                            <li class="mb-2"><i class="fas fa-check text-bmw-blue me-2"></i>Apple Watch and Android Wear integration</li>
+                        </ul>
+
+                    </div>
+                    <div class="col-lg-6 text-center">
+                        <img src="{% static 'images/tech-connected.jpg' %}" alt="ConnectedDrive" class="img-fluid rounded" style="max-height: 400px;">
+                        <div class="app-showcase mt-4">
+                            <h6 class="text-white mb-3">Available on:</h6>
+                            <div class="d-flex justify-content-center gap-3">
+                                <div class="app-platform text-center">
+                                    <i class="fab fa-apple fs-2 text-bmw-blue mb-2"></i>
+                                    <small class="text-light d-block">App Store</small>
+                                </div>
+                                <div class="app-platform text-center">
+                                    <i class="fab fa-google-play fs-2 text-bmw-blue mb-2"></i>
+                                    <small class="text-light d-block">Play Store</small>
+                                </div>
+                                <div class="app-platform text-center">
+                                    <i class="fab fa-android fs-2 text-bmw-blue mb-2"></i>
+                                    <small class="text-light d-block">Android Auto</small>
+                                </div>
+                                <div class="app-platform text-center">
+                                    <i class="fab fa-apple fs-2 text-bmw-blue mb-2"></i>
+                                    <small class="text-light d-block">CarPlay</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technology Summary Cards -->
+        <div class="row mt-5 pt-4">
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="tech-summary-card text-center p-4 rounded">
+                    <i class="fas fa-car-side text-bmw-blue fs-1 mb-3"></i>
+                    <h5 class="text-white mb-3">Driving Automation</h5>
+                    <p class="text-light small">Level 2+ automated driving capabilities for enhanced comfort and safety.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="tech-summary-card text-center p-4 rounded">
+                    <i class="fas fa-display text-bmw-blue fs-1 mb-3"></i>
+                    <h5 class="text-white mb-3">Digital Experience</h5>
+                    <p class="text-light small">Seamless digital integration with curved display and voice control.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="tech-summary-card text-center p-4 rounded">
+                    <i class="fas fa-robot text-bmw-blue fs-1 mb-3"></i>
+                    <h5 class="text-white mb-3">AI Assistant</h5>
+                    <p class="text-light small">Intelligent personal assistant that learns and adapts to your needs.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="tech-summary-card text-center p-4 rounded">
+                    <i class="fas fa-network-wired text-bmw-blue fs-1 mb-3"></i>
+                    <h5 class="text-white mb-3">Always Connected</h5>
+                    <p class="text-light small">Comprehensive connectivity with real-time services and updates.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- BMW Financial Services Section -->
+<section class="financial-section">
+    <div class="container">
+        <h2 class="section-title">BMW Financial Services</h2>
+        <p class="section-subtitle">Flexible financing options to make your dream BMW a reality</p>
+
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="financial-card">
+                    <div class="financial-icon">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                    </div>
+                    <h4 class="text-white mb-3">BMW Financing</h4>
+                    <p class="text-light mb-4">
+                        Competitive rates and flexible terms tailored to your financial situation.
+                        Drive home in your new BMW with payments that work for you.
+                    </p>
+                    <a href="#" class="btn btn-bmw">Learn More</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="financial-card">
+                    <div class="financial-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <h4 class="text-white mb-3">BMW Leasing</h4>
+                    <p class="text-light mb-4">
+                        Experience the thrill of driving a new BMW every few years with our
+                        flexible leasing options and attractive monthly payments.
+                    </p>
+                    <a href="#" class="btn btn-bmw">Explore Leasing</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="financial-card">
+                    <div class="financial-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4 class="text-white mb-3">BMW Protection</h4>
+                    <p class="text-light mb-4">
+                        Comprehensive protection plans to keep your BMW in perfect condition.
+                        From extended warranty to maintenance packages.
+                    </p>
+                    <a href="#" class="btn btn-bmw">View Plans</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Innovation Section -->
+<section class="innovation-section">
+    <div class="container">
+        <h2 class="section-title">Why Choose BMW</h2>
+        <p class="section-subtitle">Experience the difference that makes BMW the ultimate driving machine</p>
+
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card h-100">
+                    <div class="feature-icon">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <h4 class="text-white mb-3">Digital Intelligence</h4>
+                    <p class="text-light">
+                        BMW Operating System 8.5 with curved display and intuitive voice control.
+                        Stay connected with advanced digital services and over-the-air updates.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card h-100">
+                    <div class="feature-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h4 class="text-white mb-3">Sustainable Luxury</h4>
+                    <p class="text-light">
+                        Eco-friendly materials and efficient powertrains. Committed to reducing
+                        our carbon footprint while delivering exceptional luxury and performance.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card h-100">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4 class="text-white mb-3">Advanced Safety</h4>
+                    <p class="text-light">
+                        Comprehensive safety systems with driving assistance professional.
+                        Protecting what matters most with cutting-edge technology and innovation.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- BMW Lifestyle Section -->
+<section class="lifestyle-section" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)), url('{% static 'images/lifestyle.jpg' %}') center/cover no-repeat;">
+    <div class="container">
+        <h2 class="section-title">BMW Lifestyle Collection</h2>
+        <p class="section-subtitle">Extend the BMW experience beyond driving with our exclusive lifestyle products</p>
+
+        <div class="row g-4">
+            {% for product in lifestyle_products %}
+            <div class="col-lg-3 col-md-6">
+                <div class="lifestyle-product h-100">
+                    <div class="product-image-container">
+                        <img src="{{ product.image.url }}" class="lifestyle-image" alt="{{ product.name }}">
+                        <div class="product-overlay">
+                            <button class="btn btn-bmw btn-sm me-2" onclick="quickView({{ product.id }})">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn btn-bmw btn-sm" onclick="addToWishlist({{ product.id }}, '{{ product.name }}')">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="text-center mt-5">
+            <a href="{% url 'product_list' %}" class="btn btn-bmw btn-lg me-3">Shop All Products</a>
+
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="cta-section">
+    <div class="container">
+        <h2 class="cta-title">READY FOR THE ULTIMATE DRIVING EXPERIENCE?</h2>
+        <p class="cta-subtitle">Schedule your test drive today and experience BMW excellence firsthand with our premium models and innovative technology.</p>
+        <div class="cta-buttons">
+            <a href="#" class="btn btn-light btn-lg me-3">Book Test Drive</a>
+            <a href="{% url 'dealer_locator' %}" class="btn btn-outline-light btn-lg me-3">Find a Dealer</a>
+            <a href="{% url 'contact' %}" class="btn btn-outline-light btn-lg">Contact Us</a>
+        </div>
+    </div>
+</section>
+
+<!-- Latest News Section -->
+<section class="news-section" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)), url('{% static 'images/bmw-news.jpg' %}') center/cover no-repeat;">
+    <div class="container">
+        <h2 class="section-title">BMW News & Events</h2>
+        <p class="section-subtitle">Stay updated with the latest news, events, and innovations from BMW</p>
+
+
+
+        <div class="row g-4">
+            {% for post in latest_news %}
+            <div class="col-lg-4 col-md-6">
+                <div class="news-card h-100" data-category="{{ post.category.slug }}">
+                    <div class="news-image-container">
+                        <img src="{{ post.image.url }}" class="news-image" alt="{{ post.title }}">
+                        <div class="news-overlay">
+                            <button class="btn btn-bmw btn-sm me-2" onclick="shareNews('{{ post.slug }}', '{{ post.title }}')">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                            <button class="btn btn-bmw btn-sm" onclick="saveNews('{{ post.slug }}', '{{ post.title }}')">
+                                <i class="fas fa-bookmark"></i>
+                            </button>
+                        </div>
+                        <span class="news-badge">{{ post.category.name }}</span>
+                        {% if post.is_featured %}
+                        <span class="featured-badge">Featured</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="text-center mt-5">
+            <a href="{% url 'news_list' %}" class="btn btn-bmw btn-lg me-3">View All News</a>
+
+        </div>
+    </div>
+</section>
+
+
+
+<script>
+    // Enhanced Intersection Observer for animations
+    document.addEventListener('DOMContentLoaded', function() {
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                    entry.target.style.visibility = 'visible';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards and elements for animation
+        const elementsToAnimate = document.querySelectorAll('.model-card, .feature-card, .news-card, .gallery-item, .financial-card, .lifestyle-product');
+        elementsToAnimate.forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(30px)';
+            element.style.transition = 'all 0.6s ease-out';
+            element.style.visibility = 'hidden';
+            observer.observe(element);
+        });
+
+        // Technology Tabs
+        const tabBtns = document.querySelectorAll('.tech-tab-btn');
+        const tabContents = document.querySelectorAll('.tech-tab-content');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+
+                // Remove active class from all buttons and contents
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+
+                // Add active class to clicked button and corresponding content
+                btn.classList.add('active');
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+            });
+        });
+
+        // Counter animation for stats
+        function animateCounter(element, target, duration) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            const timer = setInterval(() => {
+                start += increment;
+                if (start >= target) {
+                    element.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(start);
+                }
+            }, 16);
+        }
+
+        // Animate counters when they come into view
+        const counterObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = parseFloat(entry.target.getAttribute('data-target'));
+                    if (entry.target.textContent === '0') {
+                        animateCounter(entry.target, target, 2000);
+                    }
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('[data-target]').forEach(counter => {
+            counterObserver.observe(counter);
+        });
+
+        // Gallery item click handler
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const title = this.querySelector('h5').textContent;
+                const description = this.querySelector('p').textContent;
+                showToast(`Viewing: ${title} - ${description}`, 'info');
+            });
+        });
+
+        // Enhanced typewriter effect for hero title
+        const heroTitle = document.querySelector('.hero-title');
+        if (heroTitle) {
+            const text = heroTitle.textContent;
+            heroTitle.textContent = '';
+            let i = 0;
+
+            function typeWriter() {
+                if (i < text.length) {
+                    heroTitle.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 50);
+                }
+            }
+
+            // Start typing after a delay
+            setTimeout(typeWriter, 1000);
+        }
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero-section');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+
+        // Initialize floating elements
+        const floatingElements = document.querySelectorAll('.floating-element');
+        floatingElements.forEach((element, index) => {
+            element.style.animationDelay = `${index * 0.5}s`;
+        });
+    });
+
+    // Image gallery modal (simplified version)
+    function openGalleryModal(imageSrc, title, description) {
+        showToast(`Gallery feature: ${title}`, 'info');
+        // In a real implementation, this would open a modal with the full-size image
+    }
+</script>
+{% endblock %}

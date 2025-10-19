@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5 pt-4">
+    <!-- Page Header -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-4 mb-3">BMW News</h1>
+            <p class="lead">Latest updates from the world of BMW</p>
+        </div>
+    </div>
+
+    <!-- Search and Categories -->
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <form method="get" class="d-flex">
+                <input type="text" name="search" class="form-control me-2"
+                       placeholder="Search news..." value="{{ search_query }}">
+                <button type="submit" class="btn btn-bmw">Search</button>
+            </form>
+        </div>
+        <div class="col-md-4">
+            <select class="form-select" onchange="location = this.value;">
+                <option value="{% url 'news_list' %}">All Categories</option>
+                {% for category in categories %}
+                <option value="{% url 'news_list' %}?category={{ category.slug }}"
+                        {% if selected_category == category.slug %}selected{% endif %}>
+                    {{ category.name }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <!-- Featured Post (First post) -->
+    {% if page_obj.object_list %}
+    {% with featured_post=page_obj.object_list.0 %}
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card card-bmw featured-post">
+                <div class="row g-0">
+                    <div class="col-md-6">
+                        <img src="{{ featured_post.image.url }}" class="img-fluid h-100"
+                             alt="{{ featured_post.title }}" style="object-fit: cover;">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-body p-4">
+                            <span class="badge bg-bmw-blue mb-2">{{ featured_post.category.name }}</span>
+                            <h2 class="card-title">{{ featured_post.title }}</h2>
+                            <p class="card-text">{{ featured_post.excerpt }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted">
+                                    By {{ featured_post.author.get_full_name }} | {{ featured_post.created_at|date:"M d, Y" }}
+                                </small>
+                                <a href="{% url 'news_detail' featured_post.slug %}" class="btn btn-bmw">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endwith %}
+    {% endif %}
+
+    <!-- News Grid -->
+    <div class="row">
+        {% for post in page_obj.object_list %}
+        {% if forloop.counter > 1 %}
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card card-bmw h-100">
+                <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}"
+                     style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <span class="badge bg-bmw-blue mb-2">{{ post.category.name }}</span>
+                    <h5 class="card-title">{{ post.title }}</h5>
+                    <p class="card-text">{{ post.excerpt|truncatewords:20 }}</p>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <small class="text-muted">{{ post.created_at|date:"M d, Y" }}</small>
+                        <a href="{% url 'news_detail' post.slug %}" class="btn btn-bmw btn-sm">Read</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <i class="fas fa-newspaper fa-3x text-muted mb-3"></i>
+            <h3>No news articles found</h3>
+            <p class="text-muted">Try adjusting your search or filter criteria.</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if page_obj.has_other_pages %}
+    <nav aria-label="News pagination" class="mt-5">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}">Previous</a>
+            </li>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+            <li class="page-item active">
+                <span class="page-link">{{ num }}</span>
+            </li>
+            {% else %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ num }}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}">{{ num }}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}">Next</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+</div>
+
+<style>
+    .featured-post {
+        border: 2px solid var(--bmw-neon-blue);
+        box-shadow: 0 10px 30px rgba(0, 168, 255, 0.2);
+    }
+
+    .featured-post .card-title {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+    }
+
+    .page-link {
+        background-color: var(--bmw-gray);
+        border-color: var(--bmw-light-gray);
+        color: var(--bmw-white);
+    }
+
+    .page-link:hover {
+        background-color: var(--bmw-blue);
+        border-color: var(--bmw-blue);
+        color: var(--bmw-white);
+    }
+
+    .page-item.active .page-link {
+        background-color: var(--bmw-blue);
+        border-color: var(--bmw-blue);
+    }
+</style>
+{% endblock %}

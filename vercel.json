@@ -1,0 +1,14 @@
+{
+  "builds": [
+    {
+      "src": "bmw_clone/wsgi.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "bmw_clone/wsgi.py"
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5 pt-4">
+    <div class="row">
+        <!-- Car Image -->
+        <div class="col-lg-6 mb-4">
+            <div class="card card-bmw">
+                <img src="{{ car.image.url }}" class="card-img-top" alt="{{ car.name }}">
+            </div>
+        </div>
+
+        <!-- Car Details -->
+        <div class="col-lg-6">
+            <h1 class="display-5 mb-3">{{ car.name }}</h1>
+            <p class="lead mb-4">{{ car.description }}</p>
+
+            <!-- Key Specifications -->
+            <div class="row mb-4">
+                <div class="col-md-4 text-center mb-3">
+                    <div class="spec-card">
+                        <i class="fas fa-tachometer-alt fa-2x text-bmw-blue mb-2"></i>
+                        <h4>{{ car.horsepower }} HP</h4>
+                        <small class="text-muted">Power</small>
+                    </div>
+                </div>
+                <div class="col-md-4 text-center mb-3">
+                    <div class="spec-card">
+                        <i class="fas fa-rocket fa-2x text-bmw-blue mb-2"></i>
+                        <h4>{{ car.acceleration }}s</h4>
+                        <small class="text-muted">0-60 mph</small>
+                    </div>
+                </div>
+                <div class="col-md-4 text-center mb-3">
+                    <div class="spec-card">
+                        <i class="fas fa-gauge-high fa-2x text-bmw-blue mb-2"></i>
+                        <h4>{{ car.top_speed }} mph</h4>
+                        <small class="text-muted">Top Speed</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pricing and Actions -->
+            <div class="card card-bmw mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h3 class="text-bmw-blue mb-0">${{ car.price }}</h3>
+                            <small class="text-muted">Starting MSRP</small>
+                        </div>
+                        <div>
+                            <a href="{% url 'configurator' car.id %}" class="btn btn-bmw btn-lg">
+                                <i class="fas fa-cog me-2"></i>Configure
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features -->
+            <div class="mb-4">
+                <h4>Key Features</h4>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-check text-bmw-blue me-2"></i>BMW Live Cockpit Professional</li>
+                    <li><i class="fas fa-check text-bmw-blue me-2"></i>Parking Assistant Plus</li>
+                    <li><i class="fas fa-check text-bmw-blue me-2"></i>Head-up Display</li>
+                    <li><i class="fas fa-check text-bmw-blue me-2"></i>Harman Kardon Surround Sound</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Similar Cars -->
+    {% if similar_cars %}
+    <div class="row mt-5">
+        <div class="col-12">
+            <h3 class="mb-4">Similar Models</h3>
+            <div class="row">
+                {% for similar_car in similar_cars %}
+                <div class="col-md-4 mb-4">
+                    <div class="card card-bmw h-100">
+                        <img src="{{ similar_car.image.url }}" class="card-img-top" alt="{{ similar_car.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ similar_car.name }}</h5>
+                            <p class="card-text">{{ similar_car.description|truncatewords:15 }}</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="h6 mb-0">${{ similar_car.price }}</span>
+                                <a href="{% url 'car_detail' similar_car.id %}" class="btn btn-bmw btn-sm">View</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+    .spec-card {
+        padding: 20px;
+        border: 1px solid var(--bmw-light-gray);
+        border-radius: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .spec-card:hover {
+        border-color: var(--bmw-neon-blue);
+        transform: translateY(-5px);
+    }
+</style>
+{% endblock %}

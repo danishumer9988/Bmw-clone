@@ -1,0 +1,1832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMW - The Ultimate Driving Machine</title>
+    {% load static %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bmw-black: #000000;
+            --bmw-dark-gray: #0a0a0a;
+            --bmw-gray: #1a1a1a;
+            --bmw-light-gray: #2d2d2d;
+            --bmw-blue: #0066b3;
+            --bmw-m-blue: #0080ff;
+            --bmw-neon-blue: #00a8ff;
+            --bmw-white: #ffffff;
+            --bmw-red: #e60000;
+            --bmw-silver: #e6e6e6;
+            --bmw-gold: #d4af37;
+            --bmw-electric-blue: #00d1ff;
+            --bmw-m-red: #ff0000;
+            --bmw-success: #00c853;
+            --bmw-warning: #ffab00;
+            --bmw-error: #ff1744;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bmw-black);
+            color: var(--bmw-white);
+            font-family: 'BMW Type', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.7;
+            overflow-x: hidden;
+            font-weight: 400;
+        }
+
+        /* Typography Scale */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        h1 { font-size: 3.5rem; }
+        h2 { font-size: 2.5rem; }
+        h3 { font-size: 2rem; }
+        h4 { font-size: 1.5rem; }
+        h5 { font-size: 1.25rem; }
+        h6 { font-size: 1rem; }
+
+        .lead {
+            font-size: 1.25rem;
+            font-weight: 300;
+            color: var(--bmw-silver);
+        }
+
+        /* Announcement Bar - Enhanced */
+        .announcement-bar {
+            background: linear-gradient(135deg, var(--bmw-blue), var(--bmw-electric-blue));
+            color: white;
+            padding: 12px 0;
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 500;
+            position: relative;
+            z-index: 1040;
+            box-shadow: 0 2px 10px rgba(0, 102, 179, 0.3);
+        }
+
+        .announcement-bar .close-announcement {
+            background: none;
+            border: none;
+            color: white;
+            position: absolute;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .announcement-bar .close-announcement:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+
+
+        /* BMW Official Navbar Style - Premium */
+        .navbar-bmw {
+            background: rgba(10, 10, 10, 0.98) !important;
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0;
+            height: 90px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .navbar-bmw.scrolled {
+            height: 70px;
+            background: rgba(0, 0, 0, 0.95) !important;
+            backdrop-filter: blur(25px);
+        }
+
+        .navbar-bmw .container {
+            max-width: 1400px;
+        }
+
+        .navbar-bmw .navbar-brand {
+            padding: 0;
+            margin: 0;
+            margin-right: 3rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-bmw .navbar-brand img {
+            height: 32px;
+            filter: brightness(0) invert(1);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-bmw .navbar-brand:hover img {
+            transform: scale(1.05);
+            filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba(0, 168, 255, 0.5));
+        }
+
+        /* Main Navigation */
+        .navbar-bmw .navbar-nav .nav-item {
+            position: relative;
+            margin: 0 1px;
+        }
+
+        .navbar-bmw .nav-link {
+            color: var(--bmw-white) !important;
+            font-weight: 500;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 32px 18px !important;
+            margin: 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .navbar-bmw .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--bmw-blue), var(--bmw-electric-blue));
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .navbar-bmw .nav-link:hover::before,
+        .navbar-bmw .nav-link.active::before {
+            width: 80%;
+        }
+
+        .navbar-bmw .nav-link:hover {
+            color: var(--bmw-white) !important;
+            background: linear-gradient(to bottom, rgba(0, 102, 179, 0.1), transparent);
+        }
+
+        /* Dropdown Menus - Premium */
+        .navbar-bmw .dropdown-menu {
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 3px solid var(--bmw-blue);
+            border-radius: 0 0 12px 12px;
+            margin-top: 0;
+            min-width: 280px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            padding: 0;
+            animation: dropdownSlide 0.3s ease;
+        }
+
+        @keyframes dropdownSlide {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .navbar-bmw .dropdown-item {
+            color: var(--bmw-silver);
+            padding: 14px 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .navbar-bmw .dropdown-item::before {
+            content: '';
+            position: absolute;
+            left: -100%;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 102, 179, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .navbar-bmw .dropdown-item:hover::before {
+            left: 100%;
+        }
+
+        .navbar-bmw .dropdown-item i {
+            width: 20px;
+            margin-right: 12px;
+            color: var(--bmw-blue);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-bmw .dropdown-item:hover {
+            background: linear-gradient(135deg, var(--bmw-blue), var(--bmw-m-blue));
+            color: var(--bmw-white);
+            transform: translateX(8px);
+        }
+
+        .navbar-bmw .dropdown-item:hover i {
+            color: var(--bmw-white);
+            transform: scale(1.1);
+        }
+
+        /* Quick Actions - Enhanced */
+        .quick-actions {
+            display: flex;
+            gap: 8px;
+            margin-left: 1.5rem;
+            align-items: center;
+        }
+
+        .quick-action-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--bmw-white);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .quick-action-btn:hover {
+            background: var(--bmw-blue);
+            border-color: var(--bmw-blue);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 102, 179, 0.3);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: linear-gradient(135deg, var(--bmw-red), var(--bmw-m-red));
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--bmw-dark-gray);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* BMW Search Bar - Premium */
+        .bmw-search {
+            position: relative;
+            margin-left: 1.5rem;
+        }
+
+        .bmw-search input {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 25px;
+            color: var(--bmw-white);
+            padding: 10px 20px 10px 45px;
+            width: 220px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .bmw-search input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        .bmw-search input:focus {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: var(--bmw-blue);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 102, 179, 0.2), 0 8px 25px rgba(0, 0, 0, 0.3);
+            width: 280px;
+        }
+
+        .bmw-search input:focus::placeholder {
+            opacity: 0.5;
+        }
+
+        .bmw-search i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+
+        .bmw-search input:focus + i {
+            color: var(--bmw-blue);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        /* Main Content */
+        main {
+            min-height: calc(100vh - 160px);
+            background: var(--bmw-black);
+            position: relative;
+        }
+
+        /* Back to Top Button - Enhanced */
+        .back-to-top {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            background: linear-gradient(135deg, var(--bmw-blue), var(--bmw-electric-blue));
+            color: white;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px) scale(0.8);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            border: none;
+            box-shadow: 0 8px 30px rgba(0, 102, 179, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        .back-to-top:hover {
+            background: linear-gradient(135deg, var(--bmw-m-blue), var(--bmw-neon-blue));
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 40px rgba(0, 168, 255, 0.4);
+        }
+
+        /* Preloader - Premium */
+        .bmw-preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bmw-black);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .bmw-preloader.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .bmw-preloader-logo {
+            height: 70px;
+            margin-bottom: 30px;
+            filter: brightness(0) invert(1);
+            animation: bmwPulse 2s infinite;
+        }
+
+        .bmw-preloader-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top: 3px solid var(--bmw-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            position: relative;
+        }
+
+        .bmw-preloader-spinner::after {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            border: 3px solid transparent;
+            border-top: 3px solid var(--bmw-electric-blue);
+            border-radius: 50%;
+            animation: spin 1.5s linear infinite reverse;
+        }
+
+        /* Footer - Premium */
+        .footer-bmw {
+            background: linear-gradient(180deg, var(--bmw-dark-gray) 0%, var(--bmw-black) 100%);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 60px 0 30px;
+            margin-top: 80px;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .footer-bmw::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--bmw-blue), var(--bmw-electric-blue), var(--bmw-m-blue));
+            background-size: 200% 100%;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .footer-bmw h5 {
+            color: var(--bmw-white);
+            font-size: 1rem;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-bmw h5::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--bmw-blue);
+            transition: width 0.3s ease;
+        }
+
+        .footer-bmw h5:hover::after {
+            width: 100%;
+        }
+
+        .footer-bmw a {
+            color: var(--bmw-silver);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            line-height: 2.2;
+            display: block;
+            position: relative;
+            padding-left: 0;
+        }
+
+        .footer-bmw a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 0;
+            height: 1px;
+            background: var(--bmw-blue);
+            transition: width 0.3s ease;
+            transform: translateY(-50%);
+        }
+
+        .footer-bmw a:hover {
+            color: var(--bmw-blue);
+            padding-left: 15px;
+        }
+
+        .footer-bmw a:hover::before {
+            width: 10px;
+        }
+
+        .footer-bmw .social-links {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .footer-bmw .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer-bmw .social-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .footer-bmw .social-links a:hover::before {
+            left: 100%;
+        }
+
+        .footer-bmw .social-links a:hover {
+            background: var(--bmw-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 102, 179, 0.3);
+        }
+
+        /* BMW Buttons - Premium */
+        .btn-bmw {
+            background: linear-gradient(135deg, var(--bmw-blue), var(--bmw-m-blue));
+            border: none;
+            color: white;
+            padding: 14px 32px;
+            border-radius: 30px;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 102, 179, 0.2);
+        }
+
+        .btn-bmw::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-bmw:hover::before {
+            left: 100%;
+        }
+
+        .btn-bmw:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(0, 168, 255, 0.4);
+            color: white;
+        }
+
+        .btn-bmw:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-bmw-m {
+            background: linear-gradient(135deg, var(--bmw-red), var(--bmw-m-red));
+        }
+
+        .btn-bmw-gold {
+            background: linear-gradient(135deg, var(--bmw-gold), #f4c430);
+        }
+
+        .btn-bmw-electric {
+            background: linear-gradient(135deg, var(--bmw-electric-blue), var(--bmw-neon-blue));
+        }
+
+        /* Cards - Premium */
+        .card-bmw {
+            background: linear-gradient(145deg, var(--bmw-dark-gray), var(--bmw-gray));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .card-bmw::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--bmw-blue), var(--bmw-electric-blue), var(--bmw-m-blue));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+            z-index: 1;
+        }
+
+        .card-bmw:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-bmw:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(0, 102, 179, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 102, 179, 0.1);
+        }
+
+        /* Forms - Premium */
+        .form-control-bmw {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: var(--bmw-white);
+            border-radius: 8px;
+            padding: 14px 18px;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-control-bmw:focus {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--bmw-blue);
+            color: var(--bmw-white);
+            box-shadow: 0 0 0 3px rgba(0, 102, 179, 0.15), 0 8px 25px rgba(0, 0, 0, 0.2);
+            outline: none;
+        }
+
+        .form-control-bmw::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Alerts - Premium */
+        .alert-bmw {
+            background: rgba(26, 26, 26, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--bmw-white);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .alert-bmw::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 5px;
+            background: var(--bmw-blue);
+            transition: width 0.3s ease;
+        }
+
+        .alert-bmw:hover::before {
+            width: 8px;
+        }
+
+        /* Toast Notifications - Premium */
+        .bmw-toast {
+            position: fixed;
+            top: 120px;
+            right: 30px;
+            z-index: 1060;
+            min-width: 320px;
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: 5px solid var(--bmw-blue);
+            color: var(--bmw-white);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            transform: translateX(400px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .bmw-toast.show {
+            transform: translateX(0);
+        }
+
+        .bmw-toast.success {
+            border-left-color: var(--bmw-success);
+        }
+
+        .bmw-toast.error {
+            border-left-color: var(--bmw-error);
+        }
+
+        .bmw-toast.warning {
+            border-left-color: var(--bmw-warning);
+        }
+
+        /* Scrollbar - Premium */
+        ::-webkit-scrollbar {
+            width: 14px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bmw-dark-gray);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--bmw-blue), var(--bmw-m-blue));
+            border-radius: 8px;
+            border: 3px solid var(--bmw-dark-gray);
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(var(--bmw-m-blue), var(--bmw-electric-blue));
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .navbar-bmw .nav-link {
+                padding: 32px 14px !important;
+                font-size: 0.8rem;
+            }
+
+            .bmw-search input {
+                width: 180px;
+            }
+
+            .bmw-search input:focus {
+                width: 240px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .navbar-bmw {
+                height: auto;
+                padding: 15px 0;
+            }
+
+            .navbar-bmw .nav-link {
+                padding: 16px 20px !important;
+                border-bottom: none;
+                border-left: 3px solid transparent;
+                font-size: 0.9rem;
+            }
+
+            .navbar-bmw .nav-link::before {
+                display: none;
+            }
+
+            .navbar-bmw .nav-link:hover,
+            .navbar-bmw .nav-link.active {
+                border-left: 3px solid var(--bmw-blue);
+                border-bottom: none;
+                background: rgba(0, 102, 179, 0.1);
+                transform: translateX(8px);
+            }
+
+            .bmw-search {
+                margin: 20px 0;
+                width: 100%;
+            }
+
+            .bmw-search input {
+                width: 100%;
+            }
+
+            .bmw-search input:focus {
+                width: 100%;
+            }
+
+            .quick-actions {
+                margin: 20px 0;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .footer-bmw {
+                padding: 40px 0 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            h3 { font-size: 1.75rem; }
+
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+            }
+
+            .bmw-toast {
+                right: 20px;
+                left: 20px;
+                min-width: auto;
+            }
+        }
+
+        /* Utility Classes */
+        .text-gradient {
+            background: linear-gradient(135deg, var(--bmw-blue), var(--bmw-electric-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .bg-gradient-bmw {
+            background: linear-gradient(135deg, var(--bmw-dark-gray), var(--bmw-black));
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Loading States */
+        .loading {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+    </style>
+</head>
+<body>
+<!-- Preloader -->
+<div class="bmw-preloader" id="preloader">
+    <img src="{% static 'images/bmw-logo.png' %}" alt="BMW" class="bmw-preloader-logo">
+    <div class="bmw-preloader-spinner"></div>
+</div>
+
+<!-- Announcement Bar -->
+<div class="announcement-bar" id="announcementBar">
+    <span>🚗 Exclusive Offer: Get 0.9% APR financing on select BMW models. Limited time only!</span>
+    <button class="close-announcement" onclick="closeAnnouncement()">
+        <i class="fas fa-times"></i>
+    </button>
+</div>
+
+<!-- BMW Official Style Navigation -->
+<nav class="navbar navbar-expand-lg navbar-bmw fixed-top" id="mainNavbar">
+    <div class="container">
+        <!-- BMW Logo -->
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <img src="{% static 'images/bmw-logo.png' %}" alt="BMW" class="bmw-glow">
+        </a>
+
+        <!-- Mobile Toggle -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarBMW">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navigation Items -->
+        <div class="collapse navbar-collapse" id="navbarBMW">
+            <ul class="navbar-nav me-auto">
+                <!-- Models Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="modelsDropdown" role="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-car me-1"></i>Models
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'car_list' %}"><i class="fas fa-list"></i>All Models</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{% url 'car_list' %}?category=M"><i class="fas fa-tachometer-alt"></i>M Series</a></li>
+                        <li><a class="dropdown-item" href="{% url 'car_list' %}?category=X"><i class="fas fa-truck"></i>X Series</a></li>
+                        <li><a class="dropdown-item" href="{% url 'car_list' %}?category=I"><i class="fas fa-bolt"></i>i Series</a></li>
+                        <li><a class="dropdown-item" href="{% url 'car_list' %}?category=Z"><i class="fas fa-road"></i>Z Series</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-cogs"></i>Build Your Own</a></li>
+                    </ul>
+                </li>
+
+                <!-- Shop -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'product_list' %}">
+                        <i class="fas fa-shopping-bag me-1"></i>Shop
+                    </a>
+                </li>
+
+                <!-- News -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'news_list' %}">
+                        <i class="fas fa-newspaper me-1"></i>News
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Right Side Navigation -->
+            <ul class="navbar-nav ms-auto">
+
+
+                <div class="nav-divider d-none d-lg-block"></div>
+
+                <!-- Dealer Locator -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'dealer_locator' %}">
+                        <i class="fas fa-map-marker-alt me-1"></i>Dealer Locator
+                    </a>
+                </li>
+
+                <div class="nav-divider d-none d-lg-block"></div>
+
+                <!-- User Account -->
+                {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-user me-1"></i>My BMW
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'profile' %}"><i class="fas fa-user-circle me-2"></i>Profile</a></li>
+                        <li><a class="dropdown-item" href="{% url 'orders' %}"><i class="fas fa-receipt me-2"></i>My Orders</a></li>
+                        <li><a class="dropdown-item" href="{% url 'wishlist' %}"><i class="fas fa-heart me-2"></i>Wishlist</a></li>
+                        <li><a class="dropdown-item" href="{% url 'cart' %}"><i class="fas fa-shopping-cart me-2"></i>Shopping Cart</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                    </ul>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">
+                        <i class="fas fa-sign-in-alt me-1"></i>Sign In
+                    </a>
+                </li>
+                {% endif %}
+
+                <!-- Dark Mode Toggle -->
+                <li class="nav-item">
+                    <button class="nav-link dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle Dark Mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </li>
+
+                <!-- Test Drive -->
+                <li class="nav-item ms-2">
+                    <a class="btn btn-bmw" href="#">
+                        <i class="fas fa-car me-2"></i>Test Drive
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Messages -->
+{% if messages %}
+<div class="container mt-5 pt-5">
+    {% for message in messages %}
+    <div class="alert alert-bmw alert-dismissible fade show mt-3">
+        <i class="fas fa-info-circle me-2"></i>{{ message }}
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- Main Content -->
+<main class="pt-5">
+    {% block content %}
+    {% endblock %}
+</main>
+
+<!-- Back to Top Button -->
+<button class="back-to-top" id="backToTop" title="Back to Top">
+    <i class="fas fa-chevron-up"></i>
+</button>
+
+<!-- Footer -->
+<footer class="footer-bmw">
+    <div class="container">
+        <div class="row">
+            <!-- Company -->
+            <div class="col-lg-3 col-md-6 mb-4">
+                <h5>BMW Group</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a href="#"><i class="fas fa-building me-2"></i>Company</a></li>
+                    <li class="mb-2"><a href="#"><i class="fas fa-briefcase me-2"></i>Careers</a></li>
+                    <li class="mb-2"><a href="#"><i class="fas fa-newspaper me-2"></i>Press</a></li>
+                    <li class="mb-2"><a href="#"><i class="fas fa-chart-line me-2"></i>Investors</a></li>
+                    <li class="mb-2"><a href="#"><i class="fas fa-leaf me-2"></i>Sustainability</a></li>
+                </ul>
+            </div>
+
+            <!-- Explore -->
+            <div class="col-lg-3 col-md-6 mb-4">
+                <h5>Explore BMW</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a href="{% url 'car_list' %}"><i class="fas fa-car me-2"></i>All Models</a></li>
+                    <li class="mb-2"><a href="{% url 'car_list' %}?category=I"><i class="fas fa-bolt me-2"></i>Electric Vehicles</a></li>
+                    <li class="mb-2"><a href="{% url 'car_list' %}?category=M"><i class="fas fa-tachometer-alt me-2"></i>M Series</a></li>
+                    <li class="mb-2"><a href="{% url 'product_list' %}"><i class="fas fa-shopping-bag me-2"></i>BMW Shop</a></li>
+                    <li class="mb-2"><a href="{% url 'news_list' %}"><i class="fas fa-newspaper me-2"></i>BMW News</a></li>
+                </ul>
+            </div>
+
+            <!-- Customer Service -->
+            <div class="col-lg-3 col-md-6 mb-4">
+                <h5>Customer Service</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a href="{% url 'contact' %}"><i class="fas fa-phone me-2"></i>Contact Us</a></li>
+                    <li class="mb-2"><a href="{% url 'dealer_locator' %}"><i class="fas fa-map-marker-alt me-2"></i>Find a Dealer</a></li>
+                    <li class="mb-2"><a href="#"><i class="fas fa-tools me-2"></i>Schedule Service</a></li>
+                    <li class="mb-2"><a href="#"><i class="fas fa-file-invoice-dollar me-2"></i>BMW Financial Services</a></li>
+                    <li class="mb-2"><a href="#"><i class="fas fa-question-circle me-2"></i>FAQ</a></li>
+                </ul>
+            </div>
+
+            <!-- Connect -->
+            <div class="col-lg-3 col-md-6 mb-4">
+                <h5>Connect With Us</h5>
+                <div class="social-links mb-4">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+
+                <h6><i class="fas fa-envelope me-2"></i>Subscribe to Newsletter</h6>
+                <p class="text-muted small mb-2">Get the latest news and exclusive offers</p>
+                <div class="input-group mb-3">
+                    <input type="email" class="form-control-bmw" placeholder="Your email" id="newsletterEmail">
+                    <button class="btn btn-bmw" type="button" onclick="subscribeNewsletter()">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+
+                <!-- App Download Links -->
+                <h6 class="mt-4"><i class="fas fa-mobile-alt me-2"></i>BMW Apps</h6>
+                <div class="app-downloads">
+                    <a href="#" class="btn btn-sm btn-bmw me-2 mb-2">
+                        <i class="fab fa-apple me-1"></i>App Store
+                    </a>
+                    <a href="#" class="btn btn-sm btn-bmw mb-2">
+                        <i class="fab fa-google-play me-1"></i>Play Store
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Footer -->
+        <div class="row pt-4 border-top" style="border-color: #333 !important;">
+            <div class="col-md-6">
+                <p class="text-muted mb-0 mt-2">
+                    &copy; 2024 BMW AG. This is a demonstration website.
+                </p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <a href="#" class="text-muted me-3"><i class="fas fa-shield-alt me-1"></i>Privacy Policy</a>
+                <a href="#" class="text-muted me-3"><i class="fas fa-file-contract me-1"></i>Terms of Service</a>
+                <a href="#" class="text-muted me-3"><i class="fas fa-cookie me-1"></i>Cookie Policy</a>
+                <a href="#" class="text-muted"><i class="fas fa-gavel me-1"></i>Legal</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // BMW Website Main JavaScript Class
+    class BMWWebsite {
+        constructor() {
+            this.isInitialized = false;
+            this.cartCount = 0;
+            this.currentTheme = 'dark';
+            this.init();
+        }
+
+        init() {
+            if (this.isInitialized) return;
+
+            this.initializePreloader();
+            this.initializeNavbar();
+            this.initializeScrollEffects();
+            this.initializeSearch();
+            this.initializeDropdowns();
+            this.initializeForms();
+            this.initializeAnimations();
+            this.initializeNotifications();
+            this.initializeFooter();
+            this.initializeEventListeners();
+
+            this.isInitialized = true;
+        }
+
+        // Preloader Initialization
+        initializePreloader() {
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    const preloader = document.getElementById('preloader');
+                    if (preloader) {
+                        preloader.classList.add('fade-out');
+                        setTimeout(() => {
+                            preloader.style.display = 'none';
+                        }, 500);
+                    }
+                }, 1500);
+            });
+        }
+
+        // Navbar Functionality
+        initializeNavbar() {
+            const navbar = document.getElementById('mainNavbar');
+            const navLinks = document.querySelectorAll('.navbar-bmw .nav-link');
+            const navbarToggler = document.querySelector('.navbar-toggler');
+
+            // Enhanced scroll effect
+            window.addEventListener('scroll', () => {
+                if (!navbar) return;
+
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // Active link highlighting
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+
+                    // Close mobile menu after click
+                    if (window.innerWidth <= 992) {
+                        const navbarCollapse = document.getElementById('navbarBMW');
+                        if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+                            const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
+                            if (bsCollapse) bsCollapse.hide();
+                        }
+                    }
+                });
+            });
+
+            // Mobile menu enhancement
+            if (navbarToggler) {
+                navbarToggler.addEventListener('click', () => {
+                    navbarToggler.classList.toggle('active');
+                });
+            }
+
+            // Add loading bars to nav items
+            navLinks.forEach(link => {
+                const loadingBar = document.createElement('div');
+                loadingBar.className = 'nav-loading-bar';
+                link.appendChild(loadingBar);
+            });
+        }
+
+        // Scroll Effects
+        initializeScrollEffects() {
+            const backToTop = document.getElementById('backToTop');
+
+            // Back to Top functionality
+            if (backToTop) {
+                backToTop.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+
+                // Show/hide back to top button
+                window.addEventListener('scroll', () => {
+                    if (!backToTop) return;
+
+                    if (window.pageYOffset > 300) {
+                        backToTop.classList.add('visible');
+                    } else {
+                        backToTop.classList.remove('visible');
+                    }
+                });
+            }
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', (e) => {
+                    const href = anchor.getAttribute('href');
+
+                    if (href === '#') return;
+
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+
+                    if (target) {
+                        const headerHeight = document.querySelector('.navbar-bmw')?.offsetHeight || 0;
+                        const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        }
+
+        // Search Functionality
+        initializeSearch() {
+            const searchInput = document.getElementById('globalSearch');
+
+            if (searchInput) {
+                searchInput.addEventListener('focus', () => {
+                    searchInput.parentElement.classList.add('focused');
+                });
+
+                searchInput.addEventListener('blur', () => {
+                    searchInput.parentElement.classList.remove('focused');
+                });
+
+                // Search on input with debounce
+                let searchTimeout;
+                searchInput.addEventListener('input', (e) => {
+                    clearTimeout(searchTimeout);
+                    searchTimeout = setTimeout(() => {
+                        if (e.target.value.length > 2) {
+                            this.showSearchSuggestions(e.target.value);
+                        }
+                    }, 300);
+                });
+
+                // Search on enter
+                searchInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        this.performSearch(e.target.value);
+                    }
+                });
+            }
+        }
+
+        // Dropdown Functionality
+        initializeDropdowns() {
+            if (window.innerWidth > 992) {
+                const dropdowns = document.querySelectorAll('.navbar-bmw .dropdown');
+
+                dropdowns.forEach(dropdown => {
+                    dropdown.addEventListener('mouseenter', () => {
+                        const menu = dropdown.querySelector('.dropdown-menu');
+                        const link = dropdown.querySelector('.nav-link');
+                        if (menu) menu.classList.add('show');
+                        if (link) link.classList.add('active');
+                    });
+
+                    dropdown.addEventListener('mouseleave', () => {
+                        const menu = dropdown.querySelector('.dropdown-menu');
+                        const link = dropdown.querySelector('.nav-link');
+                        if (menu) menu.classList.remove('show');
+                        if (link) link.classList.remove('active');
+                    });
+                });
+            }
+        }
+
+        // Forms Handling
+        initializeForms() {
+            // Form control enhancements
+            document.querySelectorAll('.form-control-bmw').forEach(input => {
+                input.addEventListener('focus', () => {
+                    input.parentElement.classList.add('focused');
+                });
+
+                input.addEventListener('blur', () => {
+                    if (input.value === '') {
+                        input.parentElement.classList.remove('focused');
+                    }
+                });
+
+                // Real-time validation
+                input.addEventListener('input', () => {
+                    this.validateField(input);
+                });
+            });
+
+            // Newsletter form
+            const newsletterForm = document.querySelector('.newsletter-form');
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleNewsletterSubmission(newsletterForm);
+                });
+            }
+
+            // Contact form enhancements
+            const contactForm = document.querySelector('form[action*="contact"]');
+            if (contactForm) {
+                contactForm.addEventListener('submit', (e) => {
+                    if (!this.validateForm(contactForm)) {
+                        e.preventDefault();
+                    }
+                });
+            }
+        }
+
+        // Animations System
+        initializeAnimations() {
+            // Intersection Observer for scroll animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-in');
+                        if (entry.target.hasAttribute('data-animate-delay')) {
+                            const delay = entry.target.getAttribute('data-animate-delay');
+                            entry.target.style.animationDelay = `${delay}ms`;
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            // Observe elements for animation
+            document.querySelectorAll('.model-card, .feature-card, .news-card, .footer-section').forEach(element => {
+                element.classList.add('animate-on-scroll');
+                observer.observe(element);
+            });
+
+            // Counter animation for statistics
+            this.initializeCounters();
+
+            // Hero section animations
+            this.initializeHeroAnimations();
+        }
+
+        // Counter Animations
+        initializeCounters() {
+            const counters = document.querySelectorAll('[data-counter]');
+            const counterObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counter = entry.target;
+                        const target = parseInt(counter.getAttribute('data-counter'));
+                        const duration = parseInt(counter.getAttribute('data-duration')) || 2000;
+                        this.animateCounter(counter, target, duration);
+                        counterObserver.unobserve(counter);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            counters.forEach(counter => {
+                counterObserver.observe(counter);
+            });
+        }
+
+        // Hero Animations
+        initializeHeroAnimations() {
+            const heroTitle = document.querySelector('.hero-title');
+            if (heroTitle) {
+                const text = heroTitle.textContent;
+                heroTitle.textContent = '';
+                heroTitle.style.opacity = '1';
+
+                let i = 0;
+                const typeWriter = () => {
+                    if (i < text.length) {
+                        heroTitle.textContent += text.charAt(i);
+                        i++;
+                        setTimeout(typeWriter, 100);
+                    }
+                };
+
+                setTimeout(typeWriter, 1000);
+            }
+        }
+
+        // Notification System
+        initializeNotifications() {
+            // Initialize toast container if it doesn't exist
+            if (!document.getElementById('toast-container')) {
+                const toastContainer = document.createElement('div');
+                toastContainer.id = 'toast-container';
+                toastContainer.style.cssText = `
+                    position: fixed;
+                    top: 120px;
+                    right: 30px;
+                    z-index: 1060;
+                    max-width: 400px;
+                `;
+                document.body.appendChild(toastContainer);
+            }
+        }
+
+        // Footer Functionality
+        initializeFooter() {
+            // Region/language selector
+            const regionSelects = document.querySelectorAll('.footer-region select');
+            regionSelects.forEach(select => {
+                select.addEventListener('change', (e) => {
+                    this.handleRegionChange(e.target.value);
+                });
+            });
+
+            // Social media link tracking
+            const socialLinks = document.querySelectorAll('.social-links a');
+            socialLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    this.trackSocialClick(e.target.closest('a').href);
+                });
+            });
+        }
+
+        // Event Listeners
+        initializeEventListeners() {
+            // Announcement bar close
+            const closeAnnouncement = document.querySelector('.close-announcement');
+            if (closeAnnouncement) {
+                closeAnnouncement.addEventListener('click', () => {
+                    this.closeAnnouncement();
+                });
+            }
+
+            // Dark mode toggle
+            const darkModeToggle = document.querySelector('.dark-mode-toggle');
+            if (darkModeToggle) {
+                darkModeToggle.addEventListener('click', () => {
+                    this.toggleDarkMode();
+                });
+            }
+
+            // Quick action buttons
+            document.querySelectorAll('.quick-action-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.handleQuickAction(btn);
+                });
+            });
+
+            // Test drive buttons
+            document.querySelectorAll('.btn-test-drive').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.handleTestDrive(btn);
+                });
+            });
+        }
+
+        // Utility Methods
+        performSearch(query) {
+            if (query.trim()) {
+                this.showToast(`Searching for "${query}"...`, 'info');
+                // In real implementation: window.location.href = `/search/?q=${encodeURIComponent(query)}`;
+            }
+        }
+
+        showSearchSuggestions(query) {
+            // Simulate API call
+            console.log('Fetching suggestions for:', query);
+            // Implement actual search logic here
+        }
+
+        validateField(field) {
+            const value = field.value.trim();
+            let isValid = true;
+
+            switch (field.type) {
+                case 'email':
+                    isValid = this.isValidEmail(value);
+                    break;
+                case 'tel':
+                    isValid = this.isValidPhone(value);
+                    break;
+                default:
+                    isValid = value.length > 0;
+            }
+
+            if (isValid) {
+                field.classList.remove('is-invalid');
+                field.classList.add('is-valid');
+            } else {
+                field.classList.remove('is-valid');
+                field.classList.add('is-invalid');
+            }
+
+            return isValid;
+        }
+
+        validateForm(form) {
+            let isValid = true;
+            const fields = form.querySelectorAll('input[required], textarea[required], select[required]');
+
+            fields.forEach(field => {
+                if (!this.validateField(field)) {
+                    isValid = false;
+                }
+            });
+
+            return isValid;
+        }
+
+        handleNewsletterSubmission(form) {
+            const email = form.querySelector('input[type="email"]').value;
+
+            if (this.isValidEmail(email)) {
+                this.showToast('Thank you for subscribing to our newsletter!', 'success');
+                form.reset();
+
+                // Simulate API call
+                setTimeout(() => {
+                    console.log('Newsletter subscription:', email);
+                }, 1000);
+            } else {
+                this.showToast('Please enter a valid email address.', 'error');
+            }
+        }
+
+        handleRegionChange(region) {
+            this.showToast(`Region updated to ${region}`, 'info');
+        }
+
+        trackSocialClick(url) {
+            console.log('Social media click:', url);
+            // Analytics tracking would go here
+        }
+
+        closeAnnouncement() {
+            const announcementBar = document.getElementById('announcementBar');
+            if (announcementBar) {
+                announcementBar.style.display = 'none';
+            }
+        }
+
+        toggleDarkMode() {
+            document.body.classList.toggle('light-mode');
+            const icon = document.querySelector('.dark-mode-toggle i');
+
+            if (document.body.classList.contains('light-mode')) {
+                icon.classList.replace('fa-moon', 'fa-sun');
+                this.currentTheme = 'light';
+                this.applyLightTheme();
+            } else {
+                icon.classList.replace('fa-sun', 'fa-moon');
+                this.currentTheme = 'dark';
+                this.applyDarkTheme();
+            }
+
+            // Save theme preference
+            localStorage.setItem('bmw-theme', this.currentTheme);
+        }
+
+        applyLightTheme() {
+            document.body.style.setProperty('--bmw-black', '#ffffff');
+            document.body.style.setProperty('--bmw-white', '#000000');
+            document.body.style.setProperty('--bmw-dark-gray', '#f8f9fa');
+            document.body.style.setProperty('--bmw-gray', '#dee2e6');
+            document.body.style.setProperty('--bmw-light-gray', '#e9ecef');
+            document.body.style.setProperty('--bmw-silver', '#495057');
+        }
+
+        applyDarkTheme() {
+            document.body.style.setProperty('--bmw-black', '#000000');
+            document.body.style.setProperty('--bmw-white', '#ffffff');
+            document.body.style.setProperty('--bmw-dark-gray', '#1a1a1a');
+            document.body.style.setProperty('--bmw-gray', '#2d2d2d');
+            document.body.style.setProperty('--bmw-light-gray', '#4d4d4d');
+            document.body.style.setProperty('--bmw-silver', '#cccccc');
+        }
+
+        handleQuickAction(button) {
+            const action = button.getAttribute('data-action');
+            switch (action) {
+                case 'wishlist':
+                    this.addToWishlist();
+                    break;
+                case 'compare':
+                    this.addToCompare();
+                    break;
+                case 'location':
+                    this.showDealerLocator();
+                    break;
+                default:
+                    console.log('Quick action:', action);
+            }
+        }
+
+        handleTestDrive(button) {
+            const carModel = button.getAttribute('data-model') || 'BMW';
+            this.bookTestDrive(carModel);
+        }
+
+        // Core Business Methods
+        addToCartAnimation(productId, productName) {
+            const button = document.querySelector(`[data-product="${productId}"]`);
+            if (button) {
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check me-2"></i>Added to Cart';
+                button.classList.add('btn-success');
+                button.disabled = true;
+
+                // Update cart count
+                this.cartCount++;
+                const cartCount = document.querySelector('.cart-count');
+                if (cartCount) {
+                    cartCount.textContent = this.cartCount;
+                    cartCount.style.display = 'flex';
+                }
+
+                this.showToast(`"${productName}" added to cart`, 'success');
+
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.classList.remove('btn-success');
+                    button.disabled = false;
+                }, 2000);
+            }
+        }
+
+        addToWishlist() {
+            this.showToast('Added to wishlist', 'success');
+        }
+
+        addToCompare() {
+            this.showToast('Added to comparison', 'info');
+        }
+
+        showDealerLocator() {
+            this.showToast('Opening dealer locator...', 'info');
+            // window.location.href = '/contact/dealers/';
+        }
+
+        bookTestDrive(carModel) {
+            this.showToast(`Test drive booked for ${carModel}! We'll contact you shortly.`, 'success');
+        }
+
+        quickView(productId) {
+            this.showToast('Quick view feature coming soon!', 'info');
+        }
+
+        setPriceAlert(productId) {
+            this.showToast('Price alert set for this product', 'success');
+        }
+
+        shareProduct(productId, productName) {
+            if (navigator.share) {
+                navigator.share({
+                    title: productName,
+                    text: `Check out this BMW product: ${productName}`,
+                    url: window.location.href,
+                });
+            } else {
+                this.showToast('Share link copied to clipboard', 'info');
+            }
+        }
+
+        // Animation Helpers
+        animateCounter(element, target, duration) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            const timer = setInterval(() => {
+                start += increment;
+                if (start >= target) {
+                    element.textContent = target.toLocaleString();
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(start).toLocaleString();
+                }
+            }, 16);
+        }
+
+        // Validation Helpers
+        isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        isValidPhone(phone) {
+            const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
+            return phoneRegex.test(phone.replace(/[\s\-\(\)]/g, ''));
+        }
+
+        // Toast Notification System
+        showToast(message, type = 'info') {
+            const toastContainer = document.getElementById('toast-container') || document.body;
+            const toast = document.createElement('div');
+            toast.className = `bmw-toast ${type}`;
+
+            const icons = {
+                success: 'fa-check-circle',
+                error: 'fa-exclamation-circle',
+                warning: 'fa-exclamation-triangle',
+                info: 'fa-info-circle'
+            };
+
+            const colors = {
+                success: '#00c853',
+                error: '#ff1744',
+                warning: '#ffab00',
+                info: '#0066b3'
+            };
+
+            toast.innerHTML = `
+                <div class="d-flex justify-content-between align-items-start">
+                    <div class="d-flex align-items-center">
+                        <i class="fas ${icons[type]} me-3" style="color: ${colors[type]}; font-size: 1.2rem;"></i>
+                        <div>
+                            <strong class="d-block" style="color: ${colors[type]}">${type.charAt(0).toUpperCase() + type.slice(1)}</strong>
+                            <span class="text-white">${message}</span>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white ms-3" onclick="this.parentElement.parentElement.remove()"></button>
+                </div>
+            `;
+
+            toastContainer.appendChild(toast);
+
+            // Show toast with animation
+            setTimeout(() => toast.classList.add('show'), 100);
+
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.remove();
+                    }
+                }, 300);
+            }, 5000);
+        }
+    }
+
+    // Initialize BMW Website when DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+        window.bmwWebsite = new BMWWebsite();
+
+        // Load saved theme preference
+        const savedTheme = localStorage.getItem('bmw-theme');
+        if (savedTheme === 'light') {
+            window.bmwWebsite.toggleDarkMode();
+        }
+    });
+
+    // Export functions to global scope for HTML onclick attributes
+    window.addToCartAnimation = (productId, productName) => window.bmwWebsite?.addToCartAnimation(productId, productName);
+    window.showToast = (message, type) => window.bmwWebsite?.showToast(message, type);
+    window.quickView = (productId) => window.bmwWebsite?.quickView(productId);
+    window.setPriceAlert = (productId) => window.bmwWebsite?.setPriceAlert(productId);
+    window.shareProduct = (productId, productName) => window.bmwWebsite?.shareProduct(productId, productName);
+    window.closeAnnouncement = () => window.bmwWebsite?.closeAnnouncement();
+    window.toggleDarkMode = () => window.bmwWebsite?.toggleDarkMode();
+    window.subscribeNewsletter = () => {
+        const email = document.getElementById('newsletterEmail')?.value;
+        if (email) {
+            window.bmwWebsite?.handleNewsletterSubmission({
+                querySelector: () => ({ value: email }),
+                reset: () => document.getElementById('newsletterEmail').value = ''
+            });
+        }
+    };
+</script>
+</body>
+</html>

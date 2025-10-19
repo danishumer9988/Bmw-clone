@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5 pt-4">
+    <div class="row">
+        <div class="col-12 text-center mb-5">
+            <h1 class="display-4 mb-3">Find a BMW Dealer</h1>
+            <p class="lead">Visit your local BMW dealership for test drives and expert advice</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Search Section -->
+        <div class="col-lg-4 mb-4">
+            <div class="card card-bmw">
+                <div class="card-header">
+                    <h5 class="mb-0">Find Dealers</h5>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Search by Location</label>
+                            <input type="text" class="form-control" placeholder="City, State, or ZIP">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Search Radius</label>
+                            <select class="form-select">
+                                <option>10 miles</option>
+                                <option>25 miles</option>
+                                <option>50 miles</option>
+                                <option>100 miles</option>
+                            </select>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-bmw">
+                                <i class="fas fa-search me-2"></i>Find Dealers
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Services Offered -->
+            <div class="card card-bmw mt-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Dealer Services</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-check text-bmw-blue me-2"></i>New Vehicle Sales</li>
+                        <li class="mb-2"><i class="fas fa-check text-bmw-blue me-2"></i>Certified Pre-Owned</li>
+                        <li class="mb-2"><i class="fas fa-check text-bmw-blue me-2"></i>Test Drives</li>
+                        <li class="mb-2"><i class="fas fa-check text-bmw-blue me-2"></i>Service & Maintenance</li>
+                        <li class="mb-2"><i class="fas fa-check text-bmw-blue me-2"></i>Genuine Parts</li>
+                        <li class="mb-2"><i class="fas fa-check text-bmw-blue me-2"></i>BMW Financial Services</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dealers List -->
+        <div class="col-lg-8">
+            {% for dealer in dealers %}
+            <div class="card card-bmw mb-4">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h4 class="text-bmw-blue">{{ dealer.name }}</h4>
+                            <p class="mb-2">
+                                <i class="fas fa-map-marker-alt text-muted me-2"></i>
+                                {{ dealer.address }}
+                            </p>
+                            <p class="mb-2">
+                                <i class="fas fa-phone text-muted me-2"></i>
+                                {{ dealer.phone }}
+                            </p>
+                            <p class="mb-0">
+                                <i class="fas fa-clock text-muted me-2"></i>
+                                {{ dealer.hours }}
+                            </p>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <div class="d-grid gap-2">
+                                <a href="#" class="btn btn-bmw">
+                                    <i class="fas fa-directions me-2"></i>Get Directions
+                                </a>
+                                <a href="{% url 'contact' %}" class="btn btn-outline-light">
+                                    <i class="fas fa-envelope me-2"></i>Contact
+                                </a>
+                                <a href="#" class="btn btn-outline-light">
+                                    <i class="fas fa-calendar me-2"></i>Test Drive
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            <!-- Map Placeholder -->
+            <div class="card card-bmw">
+                <div class="card-header">
+                    <h5 class="mb-0">Dealer Locations</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="dealer-map" style="height: 400px; background: var(--bmw-light-gray);">
+                        <div class="d-flex justify-content-center align-items-center h-100 text-center">
+                            <div>
+                                <i class="fas fa-map fa-3x text-muted mb-3"></i>
+                                <h4 class="text-muted">Interactive Map</h4>
+                                <p class="text-muted">Google Maps integration would be here</p>
+                                <small class="text-muted">(API key required for full functionality)</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

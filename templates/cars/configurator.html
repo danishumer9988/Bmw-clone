@@ -1,0 +1,201 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5 pt-4">
+    <div class="row">
+        <div class="col-lg-8">
+            <h1 class="display-5 mb-4">Configure Your {{ car.name }}</h1>
+
+            <!-- Configuration Form -->
+            <form method="post" id="configurator-form">
+                {% csrf_token %}
+
+                <!-- Color Selection -->
+                <div class="card card-bmw mb-4">
+                    <div class="card-header">
+                        <h4 class="mb-0">1. Select Color</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            {% for choice in form.color %}
+                            <div class="col-md-2 col-4 mb-3">
+                                <label class="configurator-option text-center">
+                                    {{ choice.tag }}
+                                    <div class="color-option mt-2"
+                                         style="background-color: {{ choice.choice_label|lower|cut:' ' }};"></div>
+                                    <small class="d-block mt-1">{{ choice.choice_label }}</small>
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wheel Selection -->
+                <div class="card card-bmw mb-4">
+                    <div class="card-header">
+                        <h4 class="mb-0">2. Select Wheels</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            {% for choice in form.wheels %}
+                            <div class="col-md-3 col-6 mb-3">
+                                <label class="configurator-option text-center">
+                                    {{ choice.tag }}
+                                    <div class="wheel-preview mt-2">
+                                        <i class="fas fa-circle fa-2x text-light"></i>
+                                    </div>
+                                    <small class="d-block mt-1">{{ choice.choice_label }}</small>
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interior Selection -->
+                <div class="card card-bmw mb-4">
+                    <div class="card-header">
+                        <h4 class="mb-0">3. Select Interior</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            {% for choice in form.interior %}
+                            <div class="col-md-3 col-6 mb-3">
+                                <label class="configurator-option text-center">
+                                    {{ choice.tag }}
+                                    <div class="interior-preview mt-2">
+                                        <i class="fas fa-chair fa-2x text-light"></i>
+                                    </div>
+                                    <small class="d-block mt-1">{{ choice.choice_label }}</small>
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-bmw btn-lg">
+                        <i class="fas fa-save me-2"></i>Save Configuration
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Configuration Preview -->
+        <div class="col-lg-4">
+            <div class="sticky-top" style="top: 100px;">
+                <div class="card card-bmw">
+                    <div class="card-header">
+                        <h4 class="mb-0">Your Configuration</h4>
+                    </div>
+                    <div class="card-body text-center">
+                        <div id="car-preview" class="mb-4">
+                            <img src="{{ car.image.url }}" alt="{{ car.name }}" class="img-fluid" id="preview-image">
+                        </div>
+
+                        <h5>{{ car.name }}</h5>
+                        <p class="text-muted">Base Price: ${{ car.price }}</p>
+
+                        <div class="configuration-summary text-start">
+                            <div class="mb-2">
+                                <strong>Color:</strong>
+                                <span id="selected-color">-</span>
+                            </div>
+                            <div class="mb-2">
+                                <strong>Wheels:</strong>
+                                <span id="selected-wheels">-</span>
+                            </div>
+                            <div class="mb-2">
+                                <strong>Interior:</strong>
+                                <span id="selected-interior">-</span>
+                            </div>
+                        </div>
+
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <strong>Total:</strong>
+                            <strong id="total-price">${{ car.price }}</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .configurator-option {
+        cursor: pointer;
+        padding: 15px;
+        border: 2px solid transparent;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .configurator-option:hover {
+        border-color: var(--bmw-neon-blue);
+    }
+
+    .configurator-option input[type="radio"] {
+        display: none;
+    }
+
+    .configurator-option input[type="radio"]:checked + .color-option,
+    .configurator-option input[type="radio"]:checked + .wheel-preview,
+    .configurator-option input[type="radio"]:checked + .interior-preview {
+        border: 3px solid var(--bmw-neon-blue);
+        box-shadow: 0 0 15px var(--bmw-neon-blue);
+    }
+
+    .color-option {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        margin: 0 auto;
+        border: 3px solid transparent;
+    }
+
+    .wheel-preview, .interior-preview {
+        padding: 10px;
+        border: 2px solid transparent;
+        border-radius: 10px;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Update preview when options are selected
+        const form = document.getElementById('configurator-form');
+        const inputs = form.querySelectorAll('input[type="radio"]');
+
+        inputs.forEach(input => {
+            input.addEventListener('change', function() {
+                updatePreview();
+            });
+        });
+
+        function updatePreview() {
+            // Update selected options in summary
+            const selectedColor = form.querySelector('input[name="color"]:checked');
+            const selectedWheels = form.querySelector('input[name="wheels"]:checked');
+            const selectedInterior = form.querySelector('input[name="interior"]:checked');
+
+            if (selectedColor) {
+                document.getElementById('selected-color').textContent = selectedColor.parentElement.textContent.trim();
+            }
+            if (selectedWheels) {
+                document.getElementById('selected-wheels').textContent = selectedWheels.parentElement.textContent.trim();
+            }
+            if (selectedInterior) {
+                document.getElementById('selected-interior').textContent = selectedInterior.parentElement.textContent.trim();
+            }
+        }
+
+        // Initialize preview
+        updatePreview();
+    });
+</script>
+{% endblock %}
